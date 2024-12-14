@@ -49,7 +49,7 @@ const Intro = () => {
       </div>
 
       {/* fixed at bottom */}
-      <div className="footer absolute flex justify-center space-x-6 text-xl items-center bottom-0 z-50 h-10 w-full bg-MidNightBlack text-Snow">
+      <div className="footer absolute flex justify-center space-x-6 text-xl items-center sticky bottom-0 z-50 h-10 w-full bg-MidNightBlack text-Snow">
         <Link
           href={SOCIAL_LINKS.GITHUB}
           target="_blank"

@@ -60,8 +60,8 @@ export const CONTACTS = {
   PHONE: "+92 3174222397",
 };
 export const SOCIAL_LINKS = {
-  GITHUB: "https://github.com/osamajavaid",
+  GITHUB: "https://github.com/MuhammadRohab-3585",
   LINKEDIN: "https://www.linkedin.com/in/muhammad-rohab-4a644633b/",
-  TWITTER: "https://twitter.com/iosamajavaid",
+  // TWITTER: "",
   FACEBOOK: "https://www.facebook.com/profile.php?id=100050371384753",
 };
