@@ -8,6 +8,7 @@ import Fiverr_Icon from "../components/Fiverr_Icon";
 import Footer from "../components/Footer";
 import {Modal} from "antd";
 import {GoogleMap, LoadScript, Marker} from "@react-google-maps/api";
+import emailjs from "emailjs-com";
 
 const Contact = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -112,12 +113,49 @@ const Contact = () => {
     },
   ];
 
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const handleInputChange = (e) => {
+    const {name, value} = e.target;
+    setFormData((prevData) => ({...prevData, [name]: value}));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .send(
+        "service_dn6m6ys", // Replace with your EmailJS Service ID
+        "template_hl8mbmx", // Replace with your EmailJS Template ID
+        formData,
+        "LhJwbmAIdrDkQzlLJ" // Replace with your EmailJS Public Key
+      )
+      .then(
+        (result) => {
+          setSuccessMessage("Message sent successfully!");
+          setFormData({name: "", email: "", message: ""});
+          setIsOpen(true);
+        },
+        (error) => {
+          setSuccessMessage("Failed to send the message. Try again later.");
+          setIsOpen(true);
+        }
+      );
+  };
+
   return (
     <BannerLayout>
       <div className=" px-4 py-2">
         <div className="my-6 text-Snow flex flex-col gap-y-5">
           <h1 className="text-lg font-bold">Contact Information</h1>
-          <div className="flex flex-col md:flex-row items-center gap-5 text-xs">
+          {/* <div className="flex flex-col md:flex-row items-center gap-5 text-xs"> */}
+          <div className="flex flex-col md:flex-row items-normal gap-5 text-xs">
             <div className="card_stylings w-full md:w-1/2 p-5 md:p-6 lg:p-8 flex flex-col gap-y-4">
               <div className="flex justify-between items-center">
                 <span className="md:text-base">Country:</span>
@@ -128,8 +166,10 @@ const Contact = () => {
                 <span className="text-LightGray md:text-sm">Lahore</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="md:text-base">Company:</span>
-                <span className="text-LightGray md:text-sm">visualsX</span>
+                {/* <span className="md:text-base">Company:</span> */}
+                {/* <span className="text-LightGray md:text-sm">visualsX</span> */}
+                <span className="md:text-base"> </span>
+                <span className="text-LightGray md:text-sm"> </span>
               </div>
             </div>
             <div className="card_stylings rounded-xl w-full md:w-1/2 p-5 md:p-6 lg:p-8 flex flex-col gap-y-4">
@@ -199,7 +239,7 @@ const Contact = () => {
         <div className="my-12 w-full h-auto text-Snow">
           <h1 className="text-lg font-bold">Get In Touch</h1>
           <div className="mt-4 py-8 px-8 bg-EveningBlack rounded-xl text-sm">
-            <div>
+            <form onSubmit={handleSubmit}>
               <div className="flex flex-col w-full">
                 <div className="userIcon relative mb-6">
                   <div
@@ -212,6 +252,9 @@ const Contact = () => {
                     type="text"
                     className="input_stylings"
                     placeholder="Name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
                   />
                 </div>
               </div>
@@ -228,6 +271,10 @@ const Contact = () => {
                     type="text"
                     className="input_stylings"
                     placeholder="Email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
                   />
                 </div>
               </div>
@@ -245,17 +292,18 @@ const Contact = () => {
                     cols={50}
                     className="input_stylings"
                     placeholder="Message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
                   />
                 </div>
               </div>
 
               <div className="my-4">
-                <button onClick={() => setIsOpen(true)} className="button">
-                  {" "}
-                  SEND MESSAGE{" "}
-                </button>
+                {/* <button onClick={() => setIsOpen(true)} className="button"> */}
+                <button className="button">SEND MESSAGE</button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
 
@@ -286,7 +334,7 @@ const Contact = () => {
         onOk={() => setIsOpen(false)}
         onCancel={() => setIsOpen(false)}
       >
-        <div className="flex flex-col items-center justify-center">
+        {/* <div className="flex flex-col items-center justify-center">
           <h1 className="text-Green font-bold text-2xl">In Progress</h1>
           <a
             className="underline text-Snow"
@@ -295,6 +343,32 @@ const Contact = () => {
           >
             Be the one to integrate this!
           </a>
+        </div> */}
+        <div className="flex flex-col items-center justify-center">
+          {successMessage === "Message sent successfully!" ? (
+            <h1 className="text-Green font-bold text-2xl">{successMessage}</h1>
+          ) : (
+            <h1 className="text-red-500 font-bold text-2xl">
+              {successMessage}
+            </h1>
+          )}
+          <span
+            className="text-lg font-bold text-white "
+            // className="underline text-Snow"
+            // target="_blank"
+            // href="https://github.com/MuhammadRohab-3585/portfolio"
+          >
+            {successMessage === "Message sent successfully!"
+              ? "Thank you for reaching out!"
+              : "Please try again!"}
+          </span>
+
+          <button
+            className="button mt-4"
+            onClick={() => setIsOpen(false)} // Close modal
+          >
+            Close
+          </button>
         </div>
       </Modal>
       <Footer />

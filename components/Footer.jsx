@@ -19,7 +19,9 @@ const Footer = () => {
             target="_blank"
             rel="noreferrer"
           >
-            Made with ❤️ by <span className="font-bold">Rohab</span>
+            {/* Made with ❤️ by */}
+            Empowerd by
+            <span className="font-bold"> Rohab</span>
           </a>
         </div>
         <div className="hidden md:flex items-center">
